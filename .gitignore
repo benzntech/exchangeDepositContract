@@ -1,0 +1,10 @@
+node_modules
+example
+artifacts
+build
+cache
+coverage
+coverage.json
+.coverage_artifacts
+.coverage_contracts
+memory-bank
