@@ -168,7 +168,8 @@ contract ExchangeDeposit {
         if (forwarderBalance == 0) {
             return;
         }
-        instance.safeTransfer(getSendAddress(), forwarderBalance);
+        address payable sendAddr = getSendAddress(); // Cache the address
+        instance.safeTransfer(sendAddr, forwarderBalance);
     }
 
     /**
@@ -235,14 +236,14 @@ contract ExchangeDeposit {
      * cold account.
      */
     receive() external payable {
-        // Using a simplified version of onlyAlive
-        // since we know that any call here has no calldata
-        // this saves a large amount of gas due to the fact we know
-        // that this can only be called from the ExchangeDeposit context
-        if (coldAddress == address(0)) revert ContractIsDead();
-        if (msg.value < minimumInput)
-            revert AmountTooSmall(msg.value, minimumInput);
-        (bool success, ) = coldAddress.call{ value: msg.value }('');
+        address payable localColdAddress = coldAddress; 
+        uint256 localMinimumInput = minimumInput; 
+
+        if (localColdAddress == address(0)) revert ContractIsDead();
+        if (msg.value < localMinimumInput)
+            revert AmountTooSmall(msg.value, localMinimumInput);
+        
+        (bool success, ) = localColdAddress.call{ value: msg.value }('');
         if (!success) revert EthForwardFailed();
         emit Deposit(msg.sender, msg.value);
     }
