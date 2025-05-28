@@ -15,7 +15,7 @@ contract ProxyFactory {
     /// @dev The main address that the deployed proxies will forward to.
     address payable public immutable MAIN_ADDRESS;
 
-    constructor(address payable addr) public {
+    constructor(address payable addr) {
         if (addr == address(0)) revert InvalidMainAddress(addr);
         MAIN_ADDRESS = addr;
     }

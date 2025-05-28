@@ -48,7 +48,7 @@ module.exports = {
         enabled: true,
         runs: 200,
       },
-      evmVersion: 'istanbul',
+      evmVersion: 'shanghai',
       outputSelection: {
         '*': {
           '*': [

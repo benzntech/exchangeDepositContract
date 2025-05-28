@@ -64,7 +64,7 @@ contract ExchangeDeposit {
      * @param coldAddr See storage coldAddress
      * @param adminAddr See storage ADMIN_ADDRESS
      */
-    constructor(address payable coldAddr, address payable adminAddr) public {
+    constructor(address payable coldAddr, address payable adminAddr) {
         if (coldAddr == address(0)) revert InvalidAddress(coldAddr);
         if (adminAddr == address(0)) revert InvalidAddress(adminAddr);
         coldAddress = coldAddr;
